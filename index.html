@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ReaR-RAD — Physics-Guided Radar Simulation</title>
+<meta name="description" content="ReaR-RAD: Physics-Guided Learning of Realistic Radar RAD Tensors for Simulators Without an Explicit Radar Sensor Model.">
+
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='46' fill='%2314151a'/%3E%3Ccircle cx='50' cy='50' r='34' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.5'/%3E%3Ccircle cx='50' cy='50' r='20' fill='none' stroke='%23ffffff' stroke-width='2' opacity='0.5'/%3E%3Cline x1='50' y1='50' x2='50' y2='10' stroke='%23ffffff' stroke-width='3'/%3E%3Ccircle cx='68' cy='30' r='4' fill='%23ffffff'/%3E%3C/svg%3E">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ TOP NAV ============ -->
+<nav class="topnav" id="topnav">
+  <div class="topnav-inner">
+    <a class="brand" href="#top">ReaR&#8209;RAD</a>
+    <ul class="nav-links">
+      <li><a href="#overview">Overview</a></li>
+      <li><a href="#method">Method</a></li>
+      <li><a href="#materials">Materials</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#citation">Citation</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="radar-field" aria-hidden="true">
+    <div class="radar-ring r1"></div>
+    <div class="radar-ring r2"></div>
+    <div class="radar-ring r3"></div>
+    <div class="radar-ring r4"></div>
+    <div class="radar-cross"></div>
+    <div class="radar-sweep"></div>
+    <span class="blip b1"></span>
+    <span class="blip b2"></span>
+    <span class="blip b3"></span>
+    <span class="blip b4"></span>
+  </div>
+
+  <div class="hero-content">
+    <p class="eyebrow">IEEE Robotics &amp; Automation Letters &middot; Submission</p>
+    <h1 class="title">ReaR&#8209;RAD</h1>
+    <p class="tagline">Physics&#8209;Guided Learning of Realistic Radar RAD Tensors<br>
+       for Simulators Without an Explicit Radar Sensor Model</p>
+
+    <p class="authors">
+      <span class="author">Vivek&nbsp;Anand<sup>1</sup></span>
+      <span class="dot">&middot;</span>
+      <span class="author">Bharat&nbsp;Lohani<sup>1</sup></span>
+      <span class="dot">&middot;</span>
+      <span class="author">Rakesh&nbsp;Mishra<sup>2</sup></span>
+    </p>
+    <p class="affils">
+      <sup>1</sup>Indian Institute of Technology Kanpur, India &nbsp;&nbsp;
+      <sup>2</sup>University of New Brunswick, Canada
+    </p>
+
+    <div class="badges">
+      <a class="badge badge-solid" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M6 2h9l5 5v15H6z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><path d="M15 2v5h5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="9" y1="13" x2="16" y2="13" stroke="currentColor" stroke-width="1.4"/><line x1="9" y1="16.5" x2="16" y2="16.5" stroke="currentColor" stroke-width="1.4"/></svg>
+        Paper (PDF)
+      </a>
+      <a class="badge" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M12 2 2 19h20L12 2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/><line x1="12" y1="9" x2="12" y2="14" stroke="currentColor" stroke-width="1.6"/><circle cx="12" cy="16.6" r="0.9" fill="currentColor"/></svg>
+        arXiv
+      </a>
+      <a class="badge" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M12 2C6.5 2 2 6.5 2 12c0 4.4 2.9 8.2 6.8 9.5.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.3-3.4-1.3-.4-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.5-1.3.1-2.7 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .6 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 22 12c0-5.5-4.5-10-10-10Z" fill="currentColor"/></svg>
+        Code
+      </a>
+      <a class="badge" href="#" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M12 3v12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/><path d="M7 10l5 5 5-5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/><path d="M4 19h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg>
+        Weights
+      </a>
+    </div>
+  </div>
+
+  <a class="scroll-cue" href="#overview" aria-label="Scroll to overview">
+    <svg viewBox="0 0 24 24"><path d="M12 4v14M6 13l6 6 6-6" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+  </a>
+</header>
+
+<main>
+
+  <!-- ============ OVERVIEW / ABSTRACT ============ -->
+  <section class="section" id="overview">
+    <p class="section-kicker">Overview</p>
+    <p class="abstract">
+      Millimetre&#8209;wave radar is essential for autonomous driving in adverse weather,
+      yet remains the least faithfully simulated sensor &mdash; its returns depend on
+      material properties that no purely geometric model captures. <strong>ReaR&#8209;RAD</strong>
+      generates realistic range&ndash;azimuth&ndash;Doppler (RAD) radar tensors directly from a
+      simulator's existing LiDAR geometry, semantics, and motion, <em>without requiring an
+      explicit radar sensor model</em>. The one quantity physics cannot compute &mdash; material reflectivity &mdash; is
+      supplied either by a learned material field or, with <strong>zero fitted
+      parameters</strong>, computed directly from ITU&#8209;R&nbsp;P.2040&#8209;4
+      electromagnetic properties at the sensor's own carrier frequency. Everything
+      else remains exact radar physics, trained against real radar in a fully
+      unpaired setting.
+    </p>
+
+    <div class="teaser-frame">
+      <img src="images/fig_teaser.png" alt="Identical geometry produces different radar returns; ReaR-RAD computes the geometric part and learns only the material-dependent reflectivity, injected from the simulator's semantic labels.">
+    </div>
+    <p class="figcap">Identical geometry, different radar return &mdash; the observation that
+      motivates the whole framework. What LiDAR and cameras cannot reveal about a
+      surface's material, a simulator already knows.</p>
+  </section>
+
+  <!-- ============ HIGHLIGHTS ============ -->
+  <section class="section alt">
+    <p class="section-kicker">Highlights</p>
+    <div class="cards">
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="24" cy="24" r="9" fill="none" stroke="currentColor" stroke-width="2"/><line x1="8" y1="8" x2="40" y2="40" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>No Radar Model Required</h3>
+        <p>Drops into any simulator that already exposes LiDAR geometry, semantics,
+           and motion &mdash; nothing else to author or calibrate.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="6" fill="currentColor"/><circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="1.4" stroke-dasharray="2 4"/></svg>
+        </div>
+        <h3>Only One Thing is Learned</h3>
+        <p>Range attenuation, antenna response and Doppler stay exact physics &mdash;
+           only material reflectivity is learned, and injected from the simulator.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 48 48"><circle cx="16" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="32" cy="24" r="10" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+        </div>
+        <h3>Trained Fully Unpaired</h3>
+        <p>Matches real radar statistics through distributional, content, localisation
+           and saliency terms &mdash; no paired sim&ndash;real observation ever exists.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 48 48"><path d="M24 6l14 8v20l-14 8-14-8V14z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M24 6v14M24 20l14-6M24 20L10 14" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>
+        </div>
+        <h3>Real Material Physics</h3>
+        <p>Reflectivity computed from ITU&#8209;R&nbsp;P.2040&#8209;4 permittivity at the
+           sensor's own carrier &mdash; zero fitted parameters, fully auditable.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">
+          <svg viewBox="0 0 48 48"><circle cx="24" cy="24" r="17" fill="none" stroke="currentColor" stroke-width="2"/><path d="M15 25l6 6 12-14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </div>
+        <h3>Validated Downstream</h3>
+        <p>Evaluated with detectors designed natively for radar tensors &mdash; RODNet
+           and RTNH &mdash; not architectures repurposed from other modalities.</p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============ METHOD ============ -->
+  <section class="section" id="method">
+    <p class="section-kicker">Method</p>
+    <h2 class="section-title">How It Works</h2>
+    <p class="section-lede">
+      Everything computable is computed; learning is confined to the single
+      quantity geometry and appearance provably cannot reveal.
+    </p>
+
+    <div class="figure-frame wide">
+      <img src="images/fig_pipeline.png" alt="ReaR-RAD pipeline: geometry encoder, learned material field, differentiable radar operator, clutter, and composition into a RAD tensor, trained against real radar.">
+    </div>
+    <p class="figcap">Geometry is deterministically binned and lightly refined; the learned
+      material field converts semantics into reflectivity; a differentiable radar operator
+      &mdash; with no trainable parameters of its own &mdash; applies exact physics; a fitted
+      clutter process completes the tensor. Gradients from an unpaired objective flow back
+      only into the material field.</p>
+
+    <div class="steps">
+      <div class="step">
+        <span class="step-tag">A</span>
+        <h4>Compute geometry</h4>
+        <p>LiDAR &rarr; occupancy, incidence angle. Deterministic, no learning.</p>
+      </div>
+      <div class="step-arrow">&rarr;</div>
+      <div class="step">
+        <span class="step-tag">B</span>
+        <h4>Learn material</h4>
+        <p>Semantic class + geometry &rarr; reflectivity &rho;. The only learned part.</p>
+      </div>
+      <div class="step-arrow">&rarr;</div>
+      <div class="step">
+        <span class="step-tag">C</span>
+        <h4>Apply physics</h4>
+        <p>Range, antenna gain, Doppler combine &rho; into a RAD tensor &mdash; exactly.</p>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============ MATERIALS ============ -->
+  <section class="section" id="materials">
+    <p class="section-kicker">Material Physics</p>
+    <h2 class="section-title">Reflectivity You Can Audit</h2>
+    <p class="section-lede">
+      The one quantity physics cannot compute need not be invented either.
+      Every surface receives its <em>measured</em> electromagnetic reflection
+      coefficient, from an international standard.
+    </p>
+
+    <div class="figure-frame wide">
+      <img src="images/fig_permittivity.png" alt="Semantic class maps to a surface mixture; ITU-R P.2040-4 gives permittivity and conductivity at the sensor carrier; the Fresnel boundary condition yields the power reflection coefficient.">
+    </div>
+    <p class="figcap">A semantic class becomes an area&#8209;fraction mixture of exposed
+      surfaces; ITU&#8209;R&nbsp;P.2040&#8209;4 supplies each constituent's permittivity and
+      conductivity at the sensor's own carrier; the Fresnel boundary condition converts
+      these into a power reflection coefficient. <strong>No parameter is fitted.</strong></p>
+
+    <div class="mat-grid">
+      <div class="mat-eq">
+        <p class="mat-eq-label">ITU&#8209;R&nbsp;P.2040&#8209;4</p>
+        <p class="mat-eq-body">&epsilon;<sub>r</sub>&prime; = a&thinsp;f&thinsp;<sup>b</sup>&nbsp;&nbsp;&nbsp;&sigma; = c&thinsp;f&thinsp;<sup>d</sup></p>
+      </div>
+      <div class="mat-eq">
+        <p class="mat-eq-label">Fresnel boundary</p>
+        <p class="mat-eq-body">|&Gamma;|<sup>2</sup> = |(1&minus;&radic;&epsilon;<sub>rc</sub>) / (1+&radic;&epsilon;<sub>rc</sub>)|<sup>2</sup></p>
+      </div>
+    </div>
+
+    <div class="table-wrap">
+      <p class="table-title">Material database &mdash; excerpt, evaluated at 76.4&nbsp;GHz</p>
+      <table class="mattable">
+        <thead>
+          <tr><th>Class</th><th>Surface mixture</th><th>&epsilon;<sub>r</sub>&prime;</th><th>&sigma; (S/m)</th><th>|&Gamma;|<sup>2</sup></th></tr>
+        </thead>
+        <tbody>
+          <tr><td><span class="ev ev-d" title="ITU-direct"></span>GuardRail</td><td>1.00 metal</td><td>1.000</td><td>10<sup>7</sup></td><td class="v">0.998</td></tr>
+          <tr class="hi"><td><span class="ev ev-d" title="ITU-direct"></span>Vehicles</td><td>0.85 metal + 0.15 glass</td><td>1.796</td><td>8.5&times;10<sup>6</sup></td><td class="v">0.876</td></tr>
+          <tr><td><span class="ev ev-a" title="assumed"></span>Pole</td><td>0.70 metal + 0.30 concrete</td><td>2.272</td><td>7.0&times;10<sup>6</sup></td><td class="v">0.745</td></tr>
+          <tr><td><span class="ev ev-a" title="assumed"></span>Fence</td><td>0.50 wood + 0.50 metal</td><td>1.495</td><td>5.0&times;10<sup>6</sup></td><td class="v">0.514</td></tr>
+          <tr class="hi"><td><span class="ev ev-d" title="ITU-direct"></span>Building</td><td>0.70 concrete + 0.20 brick</td><td>5.081</td><td>1.091</td><td class="v">0.148</td></tr>
+          <tr><td><span class="ev ev-e" title="ITU-extrapolated"></span>Ground</td><td>1.00 asphalt</td><td>4.830</td><td>4.615</td><td class="v">0.147</td></tr>
+          <tr><td><span class="ev ev-d" title="ITU-direct"></span>Wall</td><td>0.50 concrete + 0.50 brick</td><td>4.575</td><td>0.710</td><td class="v">0.131</td></tr>
+          <tr class="hi"><td><span class="ev ev-p" title="ITU-proxy"></span>Vegetation</td><td>1.00 wood</td><td>1.990</td><td>0.491</td><td class="v">0.029</td></tr>
+        </tbody>
+      </table>
+      <p class="ev-key">
+        <span class="ev ev-d"></span>itu&#8209;direct
+        <span class="ev ev-e"></span>extrapolated
+        <span class="ev ev-p"></span>proxy
+        <span class="ev ev-a"></span>assumed
+        &nbsp;&mdash;&nbsp; every mapping carries its distance from a measured fact
+      </p>
+    </div>
+
+    <div class="stats stats-3">
+      <div class="stat">
+        <span class="stat-num">30&times;</span>
+        <span class="stat-label">vehicle&#8209;to&#8209;foliage contrast<br><em>before any geometry</em></span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">+65%</span>
+        <span class="stat-label">median object contrast<br><em>beats its permutation null</em></span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0</span>
+        <span class="stat-label">fitted parameters<br><em>and zero runtime cost</em></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ RESULTS ============ -->
+  <section class="section alt" id="results">
+    <p class="section-kicker">Results</p>
+    <h2 class="section-title">What It Achieves</h2>
+
+    <div class="figure-frame wide">
+      <img src="images/qual_pair.png" alt="Generated versus real RAD tensor, summed over Doppler, on identical range-azimuth axes, with true object positions marked.">
+    </div>
+    <p class="figcap">Generated (left) vs. real (right) RAD tensors on identical axes.
+       Object returns coincide with true positions; extended roadside structure is reproduced.</p>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="stat-num">0.22</span>
+        <span class="stat-label">joint range&ndash;azimuth<br>distributional gap<br><em>(viable regime)</em></span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">93%</span>
+        <span class="stat-label">variance reduction<br>training on 40 real frames<br><em>zero collapsed runs</em></span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">2&times;</span>
+        <span class="stat-label">detection AP, correct vs.<br>permuted material<br><em>non&#8209;overlapping intervals</em></span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">0.986</span>
+        <span class="stat-label">object localisation<br>vs. 0.976 for<br>real radar itself</span>
+      </div>
+    </div>
+
+    <div class="chart-grid">
+      <figure>
+        <img src="images/fig_fidelity.png" alt="Distributional gap across five radar quantities.">
+        <figcaption>Distributional gap across five quantities &mdash; the joint
+          range&ndash;azimuth structure detectors use reaches the viable regime.</figcaption>
+      </figure>
+      <figure>
+        <img src="images/fig_ladder.png" alt="Ablation ladder isolating the causal contribution of the learned material field.">
+        <figcaption>Causal ablation: correct material assignment doubles detection AP
+          over permuted material, with non&#8209;overlapping confidence intervals.</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ============ CITATION ============ -->
+  <section class="section" id="citation">
+    <p class="section-kicker">Citation</p>
+    <h2 class="section-title">BibTeX</h2>
+    <div class="bibtex-wrap">
+      <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+      <pre id="bibtex">@article{anand2026rearrad,
+  title   = {{ReaR-RAD}: Physics-Guided Learning of Realistic Radar
+             {RAD} Tensors for Simulators Without an Explicit
+             Radar Sensor Model},
+  author  = {Anand, Vivek and Lohani, Bharat and Mishra, Rakesh},
+  journal = {IEEE Robotics and Automation Letters},
+  year    = {2026},
+  note    = {Under review}
+}</pre>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer-inner">
+    <p class="footer-brand">ReaR&#8209;RAD</p>
+    <p class="footer-affils">Indian Institute of Technology Kanpur &nbsp;&middot;&nbsp; University of New Brunswick</p>
+    <div class="footer-links">
+      <a href="#" target="_blank" rel="noopener">Paper</a>
+      <span>&middot;</span>
+      <a href="#" target="_blank" rel="noopener">Code</a>
+      <span>&middot;</span>
+      <a href="mailto:viveka21@iitk.ac.in">Contact</a>
+    </div>
+    <p class="footer-note">Project page for research purposes. &copy; 2026 the authors.</p>
+  </div>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>
